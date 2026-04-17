@@ -7,17 +7,9 @@ Public Class ClsInventoryAdapter
     Private mConnectionStringBuilder As SqlConnectionStringBuilder
 
     Public Sub New()
-    ' 本来はパスワードの暗号化、接続文字列をプログラム外に持つ等行う
-    Me.mConnectionStringBuilder =
-            New SqlConnectionStringBuilder With {
-                .DataSource = "tdc-internship01.database.windows.net",
-                .UserID = "tdc",
-                .Password = "se-1844@",
-                .InitialCatalog = "InventoryDataBase",
-                .PersistSecurityInfo = True,
-                .TrustServerCertificate = True
-            }
-  End Sub
+        Me.mConnectionStringBuilder =
+            New SqlConnectionStringBuilder(My.Settings.ConnectionString)
+    End Sub
 
     Private ReadOnly Property ConnectionString As String
         Get
@@ -30,19 +22,27 @@ Public Class ClsInventoryAdapter
         Dim wNewDataTable As New DataTable
 
         Using wConnection = New SqlConnection(Me.ConnectionString)
-            wConnection.Open()
+            Try
 
-            Using wDataAdapter As New SqlDataAdapter
+                wConnection.Open()
 
-
-                wDataAdapter.SelectCommand = New SqlCommand("select * from InventoryLog", wConnection)
-
-                wDataAdapter.Fill(wNewDataTable)
-
-            End Using
+                Using wDataAdapter As New SqlDataAdapter
 
 
-            wConnection.Close()
+                    wDataAdapter.SelectCommand = New SqlCommand("select * from InventoryLog", wConnection)
+
+                    wDataAdapter.Fill(wNewDataTable)
+
+                End Using
+
+
+                wConnection.Close()
+
+            Catch ex As Exception
+                MessageBox.Show("データの取得に失敗しました。" & vbCrLf & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+
+            End Try
         End Using
 
 
