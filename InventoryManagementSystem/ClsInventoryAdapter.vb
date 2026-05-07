@@ -40,7 +40,7 @@ Public Class ClsInventoryAdapter
 
             Catch ex As Exception
                 MessageBox.Show("データの取得に失敗しました。" & vbCrLf & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
+                Throw
 
             End Try
         End Using
