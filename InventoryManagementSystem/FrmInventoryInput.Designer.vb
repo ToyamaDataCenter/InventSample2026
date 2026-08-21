@@ -42,9 +42,17 @@ Partial Class FrmInventoryInput
         BtnAdd = New Button()
         Label8 = New Label()
         SplitContainer2 = New SplitContainer()
-        DgvInventory = New DataGridView()
         BtnRegist = New Button()
         BtnExit = New Button()
+        DgvInventory = New DataGridView()
+        vSyoriKubun = New DataGridViewTextBoxColumn()
+        vHinmei = New DataGridViewTextBoxColumn()
+        vSuuryou = New DataGridViewTextBoxColumn()
+        vTani = New DataGridViewTextBoxColumn()
+        vKingaku = New DataGridViewTextBoxColumn()
+        vTantousya = New DataGridViewTextBoxColumn()
+        vBikou = New DataGridViewTextBoxColumn()
+        vSyoriDateTime = New DataGridViewTextBoxColumn()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
         SplitContainer1.Panel2.SuspendLayout()
@@ -63,6 +71,7 @@ Partial Class FrmInventoryInput
         SplitContainer1.Dock = DockStyle.Fill
         SplitContainer1.FixedPanel = FixedPanel.Panel1
         SplitContainer1.Location = New Point(0, 0)
+        SplitContainer1.Margin = New Padding(3, 4, 3, 4)
         SplitContainer1.Name = "SplitContainer1"
         SplitContainer1.Orientation = Orientation.Horizontal
         ' 
@@ -89,8 +98,9 @@ Partial Class FrmInventoryInput
         ' SplitContainer1.Panel2
         ' 
         SplitContainer1.Panel2.Controls.Add(SplitContainer2)
-        SplitContainer1.Size = New Size(816, 612)
-        SplitContainer1.SplitterDistance = 211
+        SplitContainer1.Size = New Size(933, 816)
+        SplitContainer1.SplitterDistance = 281
+        SplitContainer1.SplitterWidth = 5
         SplitContainer1.TabIndex = 0
         ' 
         ' CmbInputType
@@ -99,17 +109,19 @@ Partial Class FrmInventoryInput
         CmbInputType.FlatStyle = FlatStyle.System
         CmbInputType.FormattingEnabled = True
         CmbInputType.Items.AddRange(New Object() {"入庫", "出庫"})
-        CmbInputType.Location = New Point(73, 41)
+        CmbInputType.Location = New Point(83, 55)
+        CmbInputType.Margin = New Padding(3, 4, 3, 4)
         CmbInputType.Name = "CmbInputType"
-        CmbInputType.Size = New Size(121, 23)
+        CmbInputType.Size = New Size(138, 28)
         CmbInputType.TabIndex = 5
         ' 
         ' NumKingaku
         ' 
-        NumKingaku.Location = New Point(484, 70)
+        NumKingaku.Location = New Point(553, 93)
+        NumKingaku.Margin = New Padding(3, 4, 3, 4)
         NumKingaku.Maximum = New Decimal(New Integer() {999999999, 0, 0, 0})
         NumKingaku.Name = "NumKingaku"
-        NumKingaku.Size = New Size(86, 23)
+        NumKingaku.Size = New Size(98, 27)
         NumKingaku.TabIndex = 13
         NumKingaku.ThousandsSeparator = True
         NumKingaku.Value = New Decimal(New Integer() {999999999, 0, 0, 0})
@@ -117,10 +129,11 @@ Partial Class FrmInventoryInput
         ' NumSuryou
         ' 
         NumSuryou.DecimalPlaces = 2
-        NumSuryou.Location = New Point(220, 70)
+        NumSuryou.Location = New Point(251, 93)
+        NumSuryou.Margin = New Padding(3, 4, 3, 4)
         NumSuryou.Maximum = New Decimal(New Integer() {9999999, 0, 0, 131072})
         NumSuryou.Name = "NumSuryou"
-        NumSuryou.Size = New Size(70, 23)
+        NumSuryou.Size = New Size(80, 27)
         NumSuryou.TabIndex = 9
         NumSuryou.ThousandsSeparator = True
         NumSuryou.Value = New Decimal(New Integer() {999999, 0, 0, 131072})
@@ -128,9 +141,9 @@ Partial Class FrmInventoryInput
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Location = New Point(453, 74)
+        Label7.Location = New Point(518, 99)
         Label7.Name = "Label7"
-        Label7.Size = New Size(31, 15)
+        Label7.Size = New Size(39, 20)
         Label7.TabIndex = 12
         Label7.Text = "金額"
         ' 
@@ -138,101 +151,107 @@ Partial Class FrmInventoryInput
         ' 
         DtpInputDate.CustomFormat = "yyyy/MM/dd hh:mm"
         DtpInputDate.Format = DateTimePickerFormat.Custom
-        DtpInputDate.Location = New Point(250, 12)
+        DtpInputDate.Location = New Point(286, 16)
+        DtpInputDate.Margin = New Padding(3, 4, 3, 4)
         DtpInputDate.Name = "DtpInputDate"
-        DtpInputDate.Size = New Size(132, 23)
+        DtpInputDate.Size = New Size(150, 27)
         DtpInputDate.TabIndex = 3
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(189, 74)
+        Label3.Location = New Point(216, 99)
         Label3.Name = "Label3"
-        Label3.Size = New Size(31, 15)
+        Label3.Size = New Size(39, 20)
         Label3.TabIndex = 8
         Label3.Text = "数量"
         ' 
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(189, 16)
+        Label5.Location = New Point(216, 21)
         Label5.Name = "Label5"
-        Label5.Size = New Size(55, 15)
+        Label5.Size = New Size(69, 20)
         Label5.TabIndex = 2
         Label5.Text = "処理日時"
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(12, 45)
+        Label4.Location = New Point(14, 60)
         Label4.Name = "Label4"
-        Label4.Size = New Size(55, 15)
+        Label4.Size = New Size(69, 20)
         Label4.TabIndex = 4
         Label4.Text = "処理区分"
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Location = New Point(306, 74)
+        Label6.Location = New Point(350, 99)
         Label6.Name = "Label6"
-        Label6.Size = New Size(31, 15)
+        Label6.Size = New Size(39, 20)
         Label6.TabIndex = 10
         Label6.Text = "単位"
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(12, 74)
+        Label2.Location = New Point(14, 99)
         Label2.Name = "Label2"
-        Label2.Size = New Size(31, 15)
+        Label2.Size = New Size(39, 20)
         Label2.TabIndex = 6
         Label2.Text = "品名"
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(12, 16)
+        Label1.Location = New Point(14, 21)
         Label1.Name = "Label1"
-        Label1.Size = New Size(43, 15)
+        Label1.Size = New Size(54, 20)
         Label1.TabIndex = 0
         Label1.Text = "担当者"
         ' 
         ' TxtTantou
         ' 
-        TxtTantou.Location = New Point(73, 12)
+        TxtTantou.Location = New Point(83, 16)
+        TxtTantou.Margin = New Padding(3, 4, 3, 4)
         TxtTantou.Name = "TxtTantou"
-        TxtTantou.Size = New Size(100, 23)
+        TxtTantou.Size = New Size(114, 27)
         TxtTantou.TabIndex = 1
         ' 
         ' TxtBikou
         ' 
-        TxtBikou.Location = New Point(12, 118)
+        TxtBikou.Location = New Point(14, 157)
+        TxtBikou.Margin = New Padding(3, 4, 3, 4)
         TxtBikou.MaxLength = 512
         TxtBikou.Multiline = True
         TxtBikou.Name = "TxtBikou"
-        TxtBikou.Size = New Size(800, 88)
+        TxtBikou.Size = New Size(914, 116)
         TxtBikou.TabIndex = 15
         TxtBikou.Text = resources.GetString("TxtBikou.Text")
         ' 
         ' TxtTani
         ' 
-        TxtTani.Location = New Point(337, 70)
+        TxtTani.Location = New Point(385, 93)
+        TxtTani.Margin = New Padding(3, 4, 3, 4)
         TxtTani.Name = "TxtTani"
-        TxtTani.Size = New Size(100, 23)
+        TxtTani.Size = New Size(114, 27)
         TxtTani.TabIndex = 11
         ' 
         ' TxtHinmei
         ' 
-        TxtHinmei.Location = New Point(73, 70)
+        TxtHinmei.Location = New Point(83, 93)
+        TxtHinmei.Margin = New Padding(3, 4, 3, 4)
         TxtHinmei.Name = "TxtHinmei"
-        TxtHinmei.Size = New Size(100, 23)
+        TxtHinmei.Size = New Size(114, 27)
         TxtHinmei.TabIndex = 7
         ' 
         ' BtnAdd
         ' 
-        BtnAdd.Location = New Point(667, 76)
+        BtnAdd.Location = New Point(762, 101)
+        BtnAdd.Margin = New Padding(3, 4, 3, 4)
         BtnAdd.Name = "BtnAdd"
-        BtnAdd.Size = New Size(145, 36)
+        BtnAdd.Size = New Size(166, 48)
         BtnAdd.TabIndex = 16
         BtnAdd.Text = "追加"
         BtnAdd.UseVisualStyleBackColor = True
@@ -240,9 +259,9 @@ Partial Class FrmInventoryInput
         ' Label8
         ' 
         Label8.AutoSize = True
-        Label8.Location = New Point(12, 100)
+        Label8.Location = New Point(14, 133)
         Label8.Name = "Label8"
-        Label8.Size = New Size(31, 15)
+        Label8.Size = New Size(39, 20)
         Label8.TabIndex = 14
         Label8.Text = "備考"
         ' 
@@ -251,6 +270,7 @@ Partial Class FrmInventoryInput
         SplitContainer2.Dock = DockStyle.Fill
         SplitContainer2.FixedPanel = FixedPanel.Panel2
         SplitContainer2.Location = New Point(0, 0)
+        SplitContainer2.Margin = New Padding(3, 4, 3, 4)
         SplitContainer2.Name = "SplitContainer2"
         SplitContainer2.Orientation = Orientation.Horizontal
         ' 
@@ -263,27 +283,18 @@ Partial Class FrmInventoryInput
         SplitContainer2.Panel2.Controls.Add(BtnRegist)
         SplitContainer2.Panel2.Controls.Add(BtnExit)
         SplitContainer2.Panel2MinSize = 38
-        SplitContainer2.Size = New Size(816, 397)
-        SplitContainer2.SplitterDistance = 345
+        SplitContainer2.Size = New Size(933, 530)
+        SplitContainer2.SplitterDistance = 459
+        SplitContainer2.SplitterWidth = 5
         SplitContainer2.TabIndex = 0
-        ' 
-        ' DgvInventory
-        ' 
-        DgvInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvInventory.Dock = DockStyle.Fill
-        DgvInventory.Location = New Point(0, 0)
-        DgvInventory.Name = "DgvInventory"
-        DgvInventory.ReadOnly = True
-        DgvInventory.RowTemplate.Height = 25
-        DgvInventory.Size = New Size(816, 345)
-        DgvInventory.TabIndex = 0
         ' 
         ' BtnRegist
         ' 
         BtnRegist.Dock = DockStyle.Fill
         BtnRegist.Location = New Point(0, 0)
+        BtnRegist.Margin = New Padding(3, 4, 3, 4)
         BtnRegist.Name = "BtnRegist"
-        BtnRegist.Size = New Size(653, 48)
+        BtnRegist.Size = New Size(747, 66)
         BtnRegist.TabIndex = 0
         BtnRegist.Text = "登録"
         BtnRegist.UseVisualStyleBackColor = True
@@ -291,19 +302,99 @@ Partial Class FrmInventoryInput
         ' BtnExit
         ' 
         BtnExit.Dock = DockStyle.Right
-        BtnExit.Location = New Point(653, 0)
+        BtnExit.Location = New Point(747, 0)
+        BtnExit.Margin = New Padding(3, 4, 3, 4)
         BtnExit.Name = "BtnExit"
-        BtnExit.Size = New Size(163, 48)
+        BtnExit.Size = New Size(186, 66)
         BtnExit.TabIndex = 1
         BtnExit.Text = "終了"
         BtnExit.UseVisualStyleBackColor = True
         ' 
+        ' DgvInventory
+        ' 
+        DgvInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DgvInventory.Columns.AddRange(New DataGridViewColumn() {vSyoriKubun, vHinmei, vSuuryou, vTani, vKingaku, vTantousya, vBikou, vSyoriDateTime})
+        DgvInventory.Dock = DockStyle.Fill
+        DgvInventory.Location = New Point(0, 0)
+        DgvInventory.Margin = New Padding(3, 4, 3, 4)
+        DgvInventory.Name = "DgvInventory"
+        DgvInventory.ReadOnly = True
+        DgvInventory.RowHeadersWidth = 51
+        DgvInventory.RowTemplate.Height = 25
+        DgvInventory.Size = New Size(933, 459)
+        DgvInventory.TabIndex = 1
+        ' 
+        ' vSyoriKubun
+        ' 
+        vSyoriKubun.HeaderText = "処理区分"
+        vSyoriKubun.MinimumWidth = 6
+        vSyoriKubun.Name = "vSyoriKubun"
+        vSyoriKubun.ReadOnly = True
+        vSyoriKubun.Width = 125
+        ' 
+        ' vHinmei
+        ' 
+        vHinmei.HeaderText = "品名"
+        vHinmei.MinimumWidth = 6
+        vHinmei.Name = "vHinmei"
+        vHinmei.ReadOnly = True
+        vHinmei.Width = 125
+        ' 
+        ' vSuuryou
+        ' 
+        vSuuryou.HeaderText = "数量"
+        vSuuryou.MinimumWidth = 6
+        vSuuryou.Name = "vSuuryou"
+        vSuuryou.ReadOnly = True
+        vSuuryou.Width = 125
+        ' 
+        ' vTani
+        ' 
+        vTani.HeaderText = "単位"
+        vTani.MinimumWidth = 6
+        vTani.Name = "vTani"
+        vTani.ReadOnly = True
+        vTani.Width = 125
+        ' 
+        ' vKingaku
+        ' 
+        vKingaku.HeaderText = "金額"
+        vKingaku.MinimumWidth = 6
+        vKingaku.Name = "vKingaku"
+        vKingaku.ReadOnly = True
+        vKingaku.Width = 125
+        ' 
+        ' vTantousya
+        ' 
+        vTantousya.HeaderText = "担当者"
+        vTantousya.MinimumWidth = 6
+        vTantousya.Name = "vTantousya"
+        vTantousya.ReadOnly = True
+        vTantousya.Width = 125
+        ' 
+        ' vBikou
+        ' 
+        vBikou.HeaderText = "備考"
+        vBikou.MinimumWidth = 6
+        vBikou.Name = "vBikou"
+        vBikou.ReadOnly = True
+        vBikou.Width = 125
+        ' 
+        ' vSyoriDateTime
+        ' 
+        vSyoriDateTime.HeaderText = "処理日時"
+        vSyoriDateTime.MinimumWidth = 6
+        vSyoriDateTime.Name = "vSyoriDateTime"
+        vSyoriDateTime.ReadOnly = True
+        vSyoriDateTime.Width = 125
+        ' 
         ' FrmInventoryInput
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(816, 612)
+        ClientSize = New Size(933, 816)
         Controls.Add(SplitContainer1)
+        Margin = New Padding(3, 4, 3, 4)
         Name = "FrmInventoryInput"
         Text = "FrmInventoryInput"
         SplitContainer1.Panel1.ResumeLayout(False)
@@ -325,7 +416,6 @@ Partial Class FrmInventoryInput
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents BtnExit As Button
     Friend WithEvents BtnRegist As Button
-    Friend WithEvents DgvInventory As DataGridView
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents TxtHinmei As TextBox
@@ -343,4 +433,13 @@ Partial Class FrmInventoryInput
     Friend WithEvents Label6 As Label
     Friend WithEvents TxtBikou As TextBox
     Friend WithEvents TxtTani As TextBox
+    Friend WithEvents DgvInventory As DataGridView
+    Friend WithEvents vSyoriKubun As DataGridViewTextBoxColumn
+    Friend WithEvents vHinmei As DataGridViewTextBoxColumn
+    Friend WithEvents vSuuryou As DataGridViewTextBoxColumn
+    Friend WithEvents vTani As DataGridViewTextBoxColumn
+    Friend WithEvents vKingaku As DataGridViewTextBoxColumn
+    Friend WithEvents vTantousya As DataGridViewTextBoxColumn
+    Friend WithEvents vBikou As DataGridViewTextBoxColumn
+    Friend WithEvents vSyoriDateTime As DataGridViewTextBoxColumn
 End Class

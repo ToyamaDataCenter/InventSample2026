@@ -18,7 +18,17 @@ Public Class FrmInventoryInput
     ''' </summary>
     Private fpInventoryAdapter As New ClsInventoryAdapter
 
+    Private Enum InvGridColumns
+        vSyoriKubun
+        vHinmei
+        vSuuryou
+        vTani
+        vKingaku
+        vTantousya
+        vBikou
+        vSyoriDateTime
 
+    End Enum
     ''' <summary>
     ''' フォーム開始時イベント
     ''' </summary>
@@ -32,8 +42,38 @@ Public Class FrmInventoryInput
         ' 最新の在庫履歴を取得
         Me.fpInventoryDataTable = fpInventoryAdapter.FillInventoryLog()
 
+        ' DBより最新の在庫データを取り込む
+        Me.fpInventoryDataTable = fpInventoryAdapter.FillInventoryLog()
+
+
+        '' 在庫データを検索条件に従い絞り込む
+        Dim wViewDataRows As IEnumerable(Of DataRow) =
+            (From
+                 _dataRow In Me.fpInventoryDataTable
+             Order By _dataRow.Field(Of DateTime)("SyoriDatetime") Descending)
+
+
+        Dim wRowCount As Integer = wViewDataRows.Count
+        Me.DgvInventory.RowCount = 20
+        For _dtIdx As Integer = 0 To 19
+            Dim wDataRow As DataRow = wViewDataRows.TakeLast(20)(_dtIdx)
+
+            '' 在庫データを成型してグリッドへ設定する
+
+            Me.DgvInventory.Item(InvGridColumns.vSyoriKubun, _dtIdx).Value =
+                If(wDataRow.Field(Of String)("SyoriKubun") = "1", "入庫", "出庫")
+            Me.DgvInventory.Item(InvGridColumns.vHinmei, _dtIdx).Value = wDataRow.Field(Of String)("Hinmei")
+            Me.DgvInventory.Item(InvGridColumns.vSuuryou, _dtIdx).Value = wDataRow.Field(Of Integer)("Suuryou")
+            Me.DgvInventory.Item(InvGridColumns.vTani, _dtIdx).Value = wDataRow.Field(Of String)("Tani")
+            Me.DgvInventory.Item(InvGridColumns.vKingaku, _dtIdx).Value = wDataRow.Field(Of Integer)("Kingaku")
+            Me.DgvInventory.Item(InvGridColumns.vTantousya, _dtIdx).Value = wDataRow.Field(Of String)("Tantousya")
+            Me.DgvInventory.Item(InvGridColumns.vBikou, _dtIdx).Value = wDataRow.Field(Of String)("Bikou")
+            Me.DgvInventory.Item(InvGridColumns.vSyoriDateTime, _dtIdx).Value = wDataRow.Field(Of DateTime)("SyoriDatetime").ToString("yy/MM/dd HH:mm")
+
+        Next
+        DgvInventory.AutoGenerateColumns = False
         ' 在庫履歴データをとデータグリッドビューへ結びつける
-        Me.DgvInventory.DataSource = Me.fpInventoryDataTable
+     
 
 
     End Sub
@@ -78,6 +118,10 @@ Public Class FrmInventoryInput
         '' 画面を新規入力可能な状態に設定する
         Me.ClearInput(False)
         Me.TxtHinmei.Focus()
+        Dim wSblWarningMessage As New StringBuilder
+        Dim wIsWarning As Boolean = False
+        fpIsRegisted = False
+        BtnRegist.ForeColor = Color.Red
     End Sub
 
     ''' <summary>
@@ -94,6 +138,8 @@ Public Class FrmInventoryInput
 
             ' 在庫履歴データをとデータグリッドビューへ結びつける
             Me.DgvInventory.DataSource = Me.fpInventoryDataTable
+            fpIsRegisted = True
+            BtnRegist.ForeColor = Color.Black
         End If
 
     End Sub
@@ -103,7 +149,24 @@ Public Class FrmInventoryInput
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
+    '''  If (Me.TxtTantou.Text.Trim.Length = 0) Then
+    '''   Dim wSblWarningMessage As New StringBuilder
+
     Private Sub BtnExit_Click(sender As Object, e As EventArgs) Handles BtnExit.Click
+
+        Dim wSblWarningMessage As New StringBuilder
+        Dim wIsWarning As Boolean = False
+        If (fpIsRegisted = False) Then
+            wSblWarningMessage.Append("・登録されていません" & vbCrLf)
+            MessageBox.Show(Me, wSblWarningMessage.ToString(),
+                            Me.Text,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1)
+            wIsWarning = True
+            Return
+
+        End If
         Me.Close()
     End Sub
 
@@ -149,6 +212,18 @@ Public Class FrmInventoryInput
 
         End If
 
+        If (Me.TxtTani.Text.Trim.Length = 0) Then
+            wSblWarningMessage.Append("・単位が入力されていません" & vbCrLf)
+            wIsWarning = True
+
+        End If
+
+        If (Me.NumSuryou.Value = 0) Then
+            wSblWarningMessage.Append("・0以外の数量を入力してください" & vbCrLf)
+            wIsWarning = True
+
+        End If
+
         '' 警告メッセージを表示する
         If (wIsWarning = True) Then
             MessageBox.Show(Me, wSblWarningMessage.ToString(),
@@ -162,9 +237,7 @@ Public Class FrmInventoryInput
 
     End Function
 
+    Private Sub TxtTani_TextChanged(sender As Object, e As EventArgs) Handles TxtTani.TextChanged
 
-
-
-
-
+    End Sub
 End Class

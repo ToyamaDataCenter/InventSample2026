@@ -64,7 +64,18 @@
 
         '' 検索結果を画面へ表示する
         Dim wRowCount As Integer = wViewDataRows.Count
+        If (wRowCount = 0) Then
+            MessageBox.Show(Me, "・検索条件に合致するデータがありません" & vbCrLf,
+                            Me.Text,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1)
+            Return ''処理から抜ける
+
+        End If
+
         Me.DgvInventory.RowCount = wRowCount ' データグリッドの行数を設定
+
 
         For _dtIdx As Integer = 0 To wRowCount - 1
             Dim wDataRow As DataRow = wViewDataRows(_dtIdx)
